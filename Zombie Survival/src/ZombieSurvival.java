@@ -637,6 +637,7 @@ public class ZombieSurvival extends JFrame
 		else if (storm >= 51 && storm <= 100)
 			{
 			JOptionPane.showMessageDialog(frame, "Lol. Killed by nature. That hasen't happened in like forever.");
+			survivorDeath();
 			}
 		}
 	public static void survivorIslandEnd()
