@@ -8,6 +8,7 @@ public class ZombieSurvival extends JFrame
 	private static final long serialVersionUID = 1L;
 	static String name; 
 	static int className;
+	static int gun = 0;
 	static int zombieBeat = 0;
 	static int bearBeat = 0;
 	static int wildNight = 0;
@@ -152,6 +153,137 @@ public class ZombieSurvival extends JFrame
 			survivorTownZombie();
 			}
 		}
+	public static void survivorTownShelter()
+		{
+		Object[] options = {"Yes", "No"};
+		int userChoice = JOptionPane.showOptionDialog(frame, "That looks like a good place to spend the night! Go inside?",
+				"Shelter",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null, options, options[1]);
+		if (userChoice == 0)
+			{
+			wildNight = wildNight + 1;
+			if (zombieBeat > 5)
+				{
+				int chance = (int)(Math.random()* 100);
+				if (chance > 97 && chance <= 100)
+					{
+					JOptionPane.showMessageDialog(frame, "Hmm...it looks like this shelter will last a while. Guess you beat the game! You survived " + wildNight + " nights and beat " + zombieBeat + " zombies. You also found " + gun + " guns.");
+					System.exit(0);
+					}
+				else 
+					{
+					JOptionPane.showMessageDialog(frame, "Guess you're not completely stupid. You've survived " + wildNight + " nights.");
+					survivorTown();
+					}
+				}
+			else 
+				{
+				JOptionPane.showMessageDialog(frame, "Guess you're not completely stupid. You've survived " + wildNight + " nights.");
+				survivorTown();
+				}
+			}
+		else if (userChoice == 1)
+			{
+			JOptionPane.showMessageDialog(frame, "........why?");
+			survivorTown();
+			}
+		}
+	public static void survivorTownFood()
+		{
+		Object[] options = {"Yes", "No"};
+		int userChoice = JOptionPane.showOptionDialog(frame, "An old grocery store. Go inside?",
+				"Wow",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null, options, options[1]);
+		if (userChoice == 0)
+			{
+			int choice = (int)(Math.random()* 100);	
+			if (choice >= 0 && choice <=50)
+				{
+				JOptionPane.showMessageDialog(frame, "Oh lordie! There be zombies in here!");
+				survivorTownZombie();
+				}
+			else 
+				{
+				JOptionPane.showMessageDialog(frame, "Looks like there's nothing here...");
+				survivorTown();
+				}
+			}
+		else 
+			{
+			JOptionPane.showMessageDialog(frame, "Movin on!");
+			survivorTown();
+			}
+		}
+	public static void survivorTownWeapons()
+		{
+		Object[] options = {"Yes", "No"};
+		int userChoice = JOptionPane.showOptionDialog(frame, "An old sporting goods store. Go inside?",
+				"Chance for Weapon",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null, options, options[1]);
+		if (userChoice == 0)
+			{
+			int choice = (int)(Math.random()* 100);	
+			if (choice >= 0 && choice <= 20)
+				{
+				JOptionPane.showMessageDialog(frame, "Oh lordie! There be zombies in here!");
+				survivorTownZombie();
+				}
+			else if (choice > 20 && choice <= 40)
+				{
+				gun = gun + 1;
+				JOptionPane.showMessageDialog(frame, "A gun! That'll help calm some zombies!");
+				}
+			else 
+				{
+				JOptionPane.showMessageDialog(frame, "Looks like there's nothing here...");
+				survivorTown();
+				}
+			}
+		else 
+			{
+			JOptionPane.showMessageDialog(frame, "Hey man it's your life. Your short and miserable life...");
+			survivorTown();
+			}
+		}
+	public static void survivorTownZombie()
+		{
+		JOptionPane.showMessageDialog(frame, "A zombie! Fight for your life man!!!");
+		int attack = (int)(Math.random()* 100);
+		if (gun > 0)
+			{
+			if (attack >= 0 && attack < 81)
+				{
+				zombieBeat = zombieBeat + 1;
+				JOptionPane.showMessageDialog(frame, "In an epic battle, you defeat the zombie with your will and your .45. That's " + zombieBeat + " attacks survived.");
+				survivorTown();
+				}
+			else if (attack >= 81 && attack <= 100)
+				{
+				JOptionPane.showMessageDialog(frame, "You died. You've beaten " + zombieBeat + " zombies, found " + gun + " guns, and survived " + wildNight + " nights.");
+				survivorDeath();
+				}
+			}
+		else 
+			{
+			if (attack >= 0 && attack < 41)
+				{
+				zombieBeat = zombieBeat + 1;
+				JOptionPane.showMessageDialog(frame, "In an epic battle, you defeat the zombie with your will and your bare hands. That's " + zombieBeat + " attacks survived.");
+				survivorTown();
+				}
+			else if (attack >= 41 && attack <= 100)
+				{
+				JOptionPane.showMessageDialog(frame, "You died. You've beaten " + zombieBeat + " zombies, found " + gun + " guns, and survived " + wildNight + " nights.");
+				survivorDeath();
+				}	
+			}
+		}
 	public static void survivorWild()
 		{
 		int path = (int)(Math.random()* 100);
@@ -183,8 +315,25 @@ public class ZombieSurvival extends JFrame
 		if (userChoice == 0)
 			{
 			wildNight = wildNight + 1;
-			JOptionPane.showMessageDialog(frame, "Guess you're not completely stupid. You've survived " + wildNight + " nights.");
-			survivorWild();
+			if (zombieBeat > 5 || bearBeat > 7)
+				{
+				int chance = (int)(Math.random()* 100);
+				if (chance > 97 && chance <= 100)
+					{
+					JOptionPane.showMessageDialog(frame, "Hmm...it looks like this shelter will last a while. Guess you beat the game! You survived " + wildNight + " nights, beat " + zombieBeat + " zombies and " + bearBeat + " bears.");
+					System.exit(0);
+					}
+				else 
+					{
+					JOptionPane.showMessageDialog(frame, "Guess you're not completely stupid. You've survived " + wildNight + " nights.");
+					survivorWild();
+					}
+				}
+			else 
+				{
+				JOptionPane.showMessageDialog(frame, "Guess you're not completely stupid. You've survived " + wildNight + " nights.");
+				survivorWild();
+				}
 			}
 		else if (userChoice == 1)
 			{
@@ -206,7 +355,7 @@ public class ZombieSurvival extends JFrame
 				}
 			else if (attack >= 61 && attack <= 100)
 				{
-				JOptionPane.showMessageDialog(frame, "You died. You've beaten " + zombieBeat + " zombies, " + bearBeat + " bears, and you made " + wildStick + " pointy sticks.");
+				JOptionPane.showMessageDialog(frame, "You died. You've beaten " + zombieBeat + " zombies, " + bearBeat + " bears, made " + wildStick + " pointy sticks, and survived " + wildNight + " nights.");
 				survivorDeath();
 				}
 			}
@@ -215,12 +364,12 @@ public class ZombieSurvival extends JFrame
 			if (attack >= 0 && attack < 41)
 				{
 				zombieBeat = zombieBeat + 1;
-				JOptionPane.showMessageDialog(frame, "In an epic battle, you defeat the zombie with your will and your sharp stick. That's " + zombieBeat + " attacks survived.");
+				JOptionPane.showMessageDialog(frame, "In an epic battle, you defeat the zombie with your will and your bare hands. That's " + zombieBeat + " attacks survived.");
 				survivorWild();
 				}
 			else if (attack >= 41 && attack <= 100)
 				{
-				JOptionPane.showMessageDialog(frame, "You died. You've beaten " + zombieBeat + " zombies, " + bearBeat + " bears, and you made " + wildStick + " pointy sticks.");
+				JOptionPane.showMessageDialog(frame, "You died. You've beaten " + zombieBeat + " zombies, " + bearBeat + " bears, made " + wildStick + " pointy sticks, and survived " + wildNight + " nights.");
 				survivorDeath();
 				}	
 			}
@@ -230,6 +379,39 @@ public class ZombieSurvival extends JFrame
 		wildStick = wildStick + 1;
 		JOptionPane.showMessageDialog(frame, "You had some time on your hands, so you made a weapon. You've crafted " + wildStick + " sharp sticks.");
 		survivorWild();
+		}
+	public static void survivorWildAttack()
+		{
+		JOptionPane.showMessageDialog(frame, "Oh God! It's a bear attack!");
+		int attack = (int)(Math.random()* 100);
+		if (wildStick > 0)
+			{
+			if (attack >= 0 && attack < 61)
+				{
+				bearBeat = bearBeat + 1;
+				JOptionPane.showMessageDialog(frame, "In an epic battle, you defeat the bear with the power of your will and your pointy stick. That's " + bearBeat + " attacks survived.");
+				survivorWild();
+				}
+			else if (attack >= 61 && attack <= 100)
+				{
+				JOptionPane.showMessageDialog(frame, "You died. You've beaten " + zombieBeat + " zombies, " + bearBeat + " bears, made " + wildStick + " pointy sticks, and survived " + wildNight + " nights.");
+				survivorDeath();
+				}
+			}
+		else 
+			{
+			if (attack >= 0 && attack < 41)
+				{
+				zombieBeat = zombieBeat + 1;
+				JOptionPane.showMessageDialog(frame, "In an epic battle, you defeat the bear with your will and your bare hands. That's " + zombieBeat + " attacks survived.");
+				survivorWild();
+				}
+			else if (attack >= 41 && attack <= 100)
+				{
+				JOptionPane.showMessageDialog(frame, "You died. You've beaten " + zombieBeat + " zombies, " + bearBeat + " bears, made " + wildStick + " pointy sticks, and survived " + wildNight + " nights.");
+				survivorDeath();
+				}	
+			}
 		}
 	public static void survivorSea()
 		{
