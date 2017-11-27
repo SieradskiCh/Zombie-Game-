@@ -19,7 +19,7 @@ public class ZombieSurvival extends JFrame
 	static int fishCaught = 0;
 	static int sharkSurvived = 0;
 	static JFrame frame = new JFrame();
-
+//this is pretty cool!
 	public static void main(String[] args)
 	    {
 		name = JOptionPane.showInputDialog("What is your name?");  
